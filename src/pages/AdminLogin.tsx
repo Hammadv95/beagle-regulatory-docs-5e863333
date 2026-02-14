@@ -33,7 +33,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 inline-block">
-            ← Back to Docs
+            ← Back to Beagle
           </Link>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
         </CardHeader>

@@ -1,0 +1,83 @@
+import { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { ArrowLeft, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { fetchDoc, getViewUrl, type Doc } from "@/lib/api";
+import { format } from "date-fns";
+
+const DocDetail = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [doc, setDoc] = useState<Doc | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!slug) return;
+    setLoading(true);
+    fetchDoc(slug)
+      .then(setDoc)
+      .catch(() => setError("Failed to load document."))
+      .finally(() => setLoading(false));
+  }, [slug]);
+
+  const viewUrl = slug ? getViewUrl(slug) : "";
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto flex items-center gap-3 px-4 py-4">
+          <Link to="/">
+            <Button variant="ghost" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <span className="text-lg font-semibold text-foreground truncate">
+            {doc?.title ?? "Document"}
+          </span>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-4 py-6 max-w-4xl">
+        {error && <p className="text-center text-destructive py-8">{error}</p>}
+
+        {loading ? (
+          <div className="space-y-4">
+            <Skeleton className="h-8 w-1/2" />
+            <Skeleton className="h-4 w-3/4" />
+            <Skeleton className="h-[70vh] w-full rounded-lg" />
+          </div>
+        ) : doc ? (
+          <>
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-foreground mb-2">{doc.title}</h1>
+              {doc.summary && (
+                <p className="text-muted-foreground mb-2">{doc.summary}</p>
+              )}
+              <div className="flex items-center gap-4">
+                <p className="text-xs text-muted-foreground">
+                  Updated {format(new Date(doc.updated_at), "MMM d, yyyy")}
+                </p>
+                <a href={viewUrl} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm" className="gap-1.5">
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    Open PDF
+                  </Button>
+                </a>
+              </div>
+            </div>
+            <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
+              <iframe
+                src={viewUrl}
+                title={doc.title}
+                className="w-full h-[75vh]"
+              />
+            </div>
+          </>
+        ) : null}
+      </main>
+    </div>
+  );
+};
+
+export default DocDetail;

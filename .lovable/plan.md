@@ -1,48 +1,16 @@
 
-# Docs Platform Frontend
 
-A modern, polished frontend for your existing FastAPI docs backend, built with React + Vite + React Router + Tailwind CSS.
+## Change Page Background to Match Logo
 
-## Environment Setup
-- API base URL configured via environment variable pointing to `https://docs-website-production.up.railway.app`
-- All API calls use this base URL
+The Beagle logo image has a white background, but the Home page uses `bg-secondary` (a warm beige/cream). This creates a visible contrast where the logo's white rectangle stands out against the page.
 
-## Pages
+### Plan
 
-### 1. Home Page (`/`)
-- **Header** with "Docs" branding
-- **Search bar** prominently placed at the top
-- Initially loads all docs via `GET /api/docs`
-- Typing in search calls `GET /api/search?q=...` with debouncing
-- Results displayed as **polished cards** showing title, summary, and formatted date
-- Clicking a card navigates to the doc detail page
-- Loading skeletons and error states
+Update the Home page's outer container background from `bg-secondary` to `bg-white` (or `bg-card` / `bg-background`) so the page background seamlessly matches the logo's white background, eliminating the visual mismatch.
 
-### 2. Doc Detail Page (`/docs/:slug`)
-- Fetches doc metadata via `GET /api/docs/{slug}`
-- Displays title, summary, and formatted updated date
-- **Embedded PDF viewer** using an iframe pointing to the backend's `/api/docs/{slug}/view` endpoint
-- "Open PDF in new tab" button
-- Back navigation to home
+### Technical Details
 
-### 3. Admin Login Page (`/admin`)
-- Clean login form with email and password fields
-- Submits to `POST /admin/login` as `x-www-form-urlencoded`
-- Saves JWT token to `localStorage`
-- Redirects to upload page on success
-- Error handling for invalid credentials
+**File: `src/pages/Home.tsx` (line 8)**
+- Change `bg-secondary` to `bg-white` on the outer `div`
+- This makes the entire page background white, matching the logo image's background so the logo blends in seamlessly
 
-### 4. Admin Upload Page (`/admin/upload`)
-- **Auth guard**: redirects to `/admin` if no token in localStorage
-- Upload form with fields: title (required), slug (optional), summary (optional), PDF file (required)
-- PDF-only file validation
-- Submits as `multipart/form-data` to `POST /admin/upload` with Bearer token
-- Success message with link to the newly uploaded doc
-- **Logout button** that clears token and redirects to login
-
-## Design & UX
-- Modern, polished look with subtle shadows, rounded cards, smooth hover transitions
-- Fully mobile responsive
-- Loading skeletons on all data-fetching pages
-- Toast notifications for success/error feedback
-- Clean typography and generous whitespace

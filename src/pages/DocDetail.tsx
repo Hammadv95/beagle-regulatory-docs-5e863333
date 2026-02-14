@@ -23,6 +23,9 @@ const DocDetail = () => {
   }, [slug]);
 
   const viewUrl = slug ? getViewUrl(slug) : "";
+  const googleViewerUrl = viewUrl
+    ? `https://docs.google.com/gview?url=${encodeURIComponent(viewUrl)}&embedded=true`
+    : "";
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -62,17 +65,14 @@ const DocDetail = () => {
                 Updated {format(new Date(doc.updated_at), "MMM d, yyyy")}
               </p>
             </div>
-            <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
-              <object
-                data={viewUrl}
-                type="application/pdf"
+            <div className="rounded-lg border overflow-hidden shadow-sm bg-card relative">
+              <iframe
+                src={googleViewerUrl}
                 title={doc.title}
                 className="w-full h-[75vh]"
-              >
-                <p className="p-4 text-center text-muted-foreground">
-                  Unable to display PDF. <a href={viewUrl} target="_blank" rel="noopener noreferrer" className="underline">Download it here</a>.
-                </p>
-              </object>
+              />
+              {/* Overlay to hide the Google Docs Viewer external link icon */}
+              <div className="absolute top-0 right-0 w-12 h-12 bg-white" />
             </div>
           </>
         ) : null}

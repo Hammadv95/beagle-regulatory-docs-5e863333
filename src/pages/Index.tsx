@@ -47,6 +47,7 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
+        <h1 className="text-3xl font-bold text-foreground mb-6">State Regulatory Policies</h1>
         <div className="relative mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input

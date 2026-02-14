@@ -71,8 +71,8 @@ const DocDetail = () => {
                 title={doc.title}
                 className="w-full h-[75vh]"
               />
-              {/* Overlay to hide the Google Docs Viewer external link icon */}
-              <div className="absolute top-0 right-0 w-12 h-12 bg-white" />
+              {/* Overlay to cover the Google Docs Viewer external link icon */}
+              <div className="absolute top-0 right-0 w-16 h-14 bg-[#f1f3f4] pointer-events-none" />
             </div>
           </>
         ) : null}

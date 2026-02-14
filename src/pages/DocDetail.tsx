@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchDoc, getViewUrl, type Doc } from "@/lib/api";
@@ -23,9 +23,6 @@ const DocDetail = () => {
   }, [slug]);
 
   const viewUrl = slug ? getViewUrl(slug) : "";
-  const googleViewerUrl = viewUrl
-    ? `https://docs.google.com/gview?url=${encodeURIComponent(viewUrl)}&embedded=true`
-    : "";
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -66,11 +63,16 @@ const DocDetail = () => {
               </p>
             </div>
             <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
-              <iframe
-                src={googleViewerUrl}
+              <object
+                data={viewUrl}
+                type="application/pdf"
                 title={doc.title}
                 className="w-full h-[75vh]"
-              />
+              >
+                <p className="p-4 text-center text-muted-foreground">
+                  Unable to display PDF. <a href={viewUrl} target="_blank" rel="noopener noreferrer" className="underline">Download it here</a>.
+                </p>
+              </object>
             </div>
           </>
         ) : null}

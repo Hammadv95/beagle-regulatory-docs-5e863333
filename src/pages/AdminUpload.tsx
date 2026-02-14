@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import beagleLogo from "@/assets/beagle-logo.png";
 import { Upload, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -65,8 +66,8 @@ const AdminUpload = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
-          <Link to="/" className="text-2xl font-bold tracking-tight text-primary">
-            Beagle
+          <Link to="/">
+            <img src={beagleLogo} alt="Beagle" className="h-9" />
           </Link>
           <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-1.5">
             <LogOut className="h-4 w-4" />

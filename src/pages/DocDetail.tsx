@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import beagleLogo from "@/assets/beagle-logo.png";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -35,7 +36,10 @@ const DocDetail = () => {
               <ArrowLeft className="h-4 w-4" />
             </Button>
           </Link>
-          <span className="text-lg font-semibold text-foreground truncate">
+          <Link to="/">
+            <img src={beagleLogo} alt="Beagle" className="h-8" />
+          </Link>
+          <span className="text-lg font-semibold text-foreground truncate ml-auto">
             {doc?.title ?? "Document"}
           </span>
         </div>

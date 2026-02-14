@@ -31,7 +31,7 @@ const Index = () => {
   }, [debouncedQuery]);
 
   return (
-    <div className="min-h-screen bg-[#fffaf5]">
+    <div className="min-h-screen bg-secondary">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 bg-[#fffaf5]">
           <Link to="/">
@@ -47,7 +47,7 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
-        <h1 className="text-3xl font-bold text-foreground mb-6">State Regulatory Policies</h1>
+        <h1 className="text-3xl font-bold mb-6 bg-secondary text-primary">State Regulatory Policies</h1>
         <div className="relative mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input

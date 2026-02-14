@@ -28,9 +28,9 @@ const DocDetail = () => {
     : "";
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-secondary">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto flex items-center gap-3 px-4 py-4">
+        <div className="container mx-auto flex items-center gap-3 px-4 py-4 bg-[#fffaf5]">
           <Link to="/">
             <Button variant="ghost" size="icon">
               <ArrowLeft className="h-4 w-4" />

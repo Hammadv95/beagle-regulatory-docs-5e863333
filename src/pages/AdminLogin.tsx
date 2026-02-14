@@ -29,7 +29,7 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-secondary flex items-center justify-center px-4">
       <Card className="w-full max-w-sm shadow-lg">
         <CardHeader className="text-center">
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 inline-block">

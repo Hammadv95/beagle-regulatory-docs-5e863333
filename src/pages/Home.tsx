@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-secondary flex flex-col items-center justify-center px-4">
       <div className="flex flex-col items-center mb-12">
-        <img src={beagleLogo} alt="Beagle" className="h-28 mb-4" />
+        <img src={beagleLogo} alt="Beagle" className="h-36 mb-4" />
         
 
 

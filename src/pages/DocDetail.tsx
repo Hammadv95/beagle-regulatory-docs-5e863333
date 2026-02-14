@@ -37,7 +37,7 @@ const DocDetail = () => {
             </Button>
           </Link>
           <Link to="/">
-            <img src={beagleLogo} alt="Beagle" className="h-8" />
+            <img src={beagleLogo} alt="Beagle" className="h-12" />
           </Link>
           <span className="text-lg font-semibold text-foreground truncate ml-auto">
             {doc?.title ?? "Document"}

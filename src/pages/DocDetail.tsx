@@ -65,14 +65,14 @@ const DocDetail = () => {
                 Updated {format(new Date(doc.updated_at), "MMM d, yyyy")}
               </p>
             </div>
-            <div className="rounded-lg border overflow-hidden shadow-sm bg-card relative">
+            <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
               <iframe
                 src={googleViewerUrl}
                 title={doc.title}
                 className="w-full h-[75vh]"
               />
               {/* Overlay to cover the Google Docs Viewer external link icon */}
-              <div className="absolute top-0 right-0 w-10 h-10 sm:w-16 sm:h-14 bg-[#f1f3f4] pointer-events-none" />
+              
             </div>
           </>
         ) : null}

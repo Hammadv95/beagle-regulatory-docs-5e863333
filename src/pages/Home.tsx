@@ -8,9 +8,9 @@ const Home = () => {
     <div className="min-h-screen bg-secondary flex flex-col items-center justify-center px-4">
       <div className="flex flex-col items-center mb-12">
         <img src={beagleLogo} alt="Beagle" className="h-28 mb-4" />
-        <p className="text-sm text-muted-foreground tracking-widest uppercase">
-          A Corgi Company
-        </p>
+        
+
+
       </div>
 
       <div className="w-full max-w-md space-y-4">
@@ -32,8 +32,8 @@ const Home = () => {
           </Card>
         </Link>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Home;

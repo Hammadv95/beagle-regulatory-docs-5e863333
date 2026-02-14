@@ -35,7 +35,7 @@ const Index = () => {
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between px-4 py-4">
           <Link to="/">
-            <img src={beagleLogo} alt="Beagle" className="h-14" />
+            <img src={beagleLogo} alt="Beagle" className="h-16" />
           </Link>
           <Link
             to="/admin"

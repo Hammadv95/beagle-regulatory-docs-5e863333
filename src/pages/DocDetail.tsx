@@ -61,17 +61,9 @@ const DocDetail = () => {
               {doc.summary && (
                 <p className="text-muted-foreground mb-2">{doc.summary}</p>
               )}
-              <div className="flex items-center gap-4">
-                <p className="text-xs text-muted-foreground">
-                  Updated {format(new Date(doc.updated_at), "MMM d, yyyy")}
-                </p>
-                <a href={viewUrl} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" size="sm" className="gap-1.5">
-                    <ExternalLink className="h-3.5 w-3.5" />
-                    Open PDF
-                  </Button>
-                </a>
-              </div>
+              <p className="text-xs text-muted-foreground">
+                Updated {format(new Date(doc.updated_at), "MMM d, yyyy")}
+              </p>
             </div>
             <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
               <iframe

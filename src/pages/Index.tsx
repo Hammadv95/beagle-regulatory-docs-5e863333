@@ -33,7 +33,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#fffaf5]">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        <div className="container mx-auto flex items-center justify-between px-4 py-4 bg-[#fffaf5]">
           <Link to="/">
             <img src={beagleLogo} alt="Beagle" className="h-16" />
           </Link>

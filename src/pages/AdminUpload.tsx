@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -132,6 +133,9 @@ export default function AdminUploadPage() {
     <div className="min-h-screen bg-[#fffaf4] p-6 flex items-center justify-center">
       <Card className="w-full max-w-lg">
         <CardHeader>
+          <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-2 inline-block">
+            ← Back to Home
+          </Link>
           <CardTitle className="flex items-center gap-2">
             {isFAQ ? <HelpCircle className="h-5 w-5" /> : <Upload className="h-5 w-5" />}
             Admin Upload

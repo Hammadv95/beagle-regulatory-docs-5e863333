@@ -73,9 +73,6 @@ async def get_status_checks():
     
     return status_checks
 
-# Include the router in the main app
-app.include_router(api_router)
-
 # Admin Upload Endpoint
 @api_router.post("/admin/upload")
 async def admin_upload(

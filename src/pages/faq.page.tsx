@@ -85,7 +85,7 @@ export default function FAQPage() {
               <p className="text-center text-muted-foreground py-12">No FAQs match your search.</p>
             ) : (
               Object.entries(grouped).map(([cat, items]) => (
-                <Collapsible key={cat} defaultOpen={cat === "General" || cat === "Portfolio Fit"} className="mb-8">
+                <Collapsible key={cat} defaultOpen={cat !== "General" && cat !== "Portfolio Fit"} className="mb-8">
                   <CollapsibleTrigger className="flex w-full items-center justify-between text-xl font-semibold border-b pb-2 cursor-pointer hover:text-primary transition-colors">
                     {cat}
                     <ChevronDown className="h-5 w-5 transition-transform duration-200 [[data-state=open]>&]:rotate-180" />

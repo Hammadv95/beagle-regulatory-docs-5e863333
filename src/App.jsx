@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import DocumentList from "./pages/DocumentList.jsx";
 import DocumentDetail from "./pages/DocumentDetail.jsx";
 import PMSReportList from "./pages/PMSReportList.jsx";
+import AdminLogin from "./pages/AdminLogin.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 import axios from "axios";
 import { Button } from "./components/ui/button.jsx";
@@ -74,6 +75,7 @@ const Home = () => {
 };
 
 const AdminUpload = () => {
+  // Admin upload component
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [summary, setSummary] = useState("");
@@ -83,6 +85,20 @@ const AdminUpload = () => {
   const [message, setMessage] = useState({ type: "", text: "" });
 
   const token = localStorage.getItem("admin_token") || "";
+
+  // Redirect to login if no token
+  if (!token) {
+    return (
+      <div className="min-h-screen bg-background p-6 flex items-center justify-center">
+        <Card className="w-full max-w-md text-center p-6">
+          <p className="mb-4 text-muted-foreground">You need to log in to access the admin panel.</p>
+          <a href="/admin/login">
+            <Button>Go to Login</Button>
+          </a>
+        </Card>
+      </div>
+    );
+  }
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files?.[0];
@@ -99,7 +115,6 @@ const AdminUpload = () => {
     e.preventDefault();
     if (!title.trim()) { setMessage({ type: "error", text: "Title is required" }); return; }
     if (!file) { setMessage({ type: "error", text: "Please select a PDF file" }); return; }
-    if (!token) { setMessage({ type: "error", text: "Authentication required. Please log in." }); return; }
 
     setLoading(true);
     setMessage({ type: "", text: "" });
@@ -206,6 +221,7 @@ function App() {
           <Route path="/docs" element={<DocumentList />} />
           <Route path="/docs/pms-reports" element={<PMSReportList />} />
           <Route path="/docs/:slug" element={<DocumentDetail />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
         </Routes>
       </BrowserRouter>

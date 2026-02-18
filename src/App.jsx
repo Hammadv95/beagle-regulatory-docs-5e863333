@@ -23,46 +23,34 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://docs-website-pr
 const API = `${BACKEND_URL}/api`;
 
 const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://beagleprotected.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" alt="Beagle Logo" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-        <Link 
-          to="/docs" 
-          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-          data-testid="docs-link"
-        >
-          View Documents
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 bg-background">
+      <div className="flex flex-col items-center mb-12">
+        <img
+          src="https://beagleprotected.com/assets/beagle-logo-CcCLgaIr.png"
+          alt="Beagle"
+          className="h-36 mb-4"
+        />
+      </div>
+      <div className="w-full max-w-md space-y-4">
+        <Link to="/docs" data-testid="docs-link">
+          <div className="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow cursor-pointer group border-border/60">
+            <div className="p-6 flex items-start gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 text-primary">
+                <FileText className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  State Regulatory Policies
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Browse and search state-level regulatory policy documents.
+                </p>
+              </div>
+            </div>
+          </div>
         </Link>
-        <Link 
-          to="/admin/upload" 
-          className="mt-3 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
-          data-testid="admin-upload-link"
-        >
-          Admin Upload
-        </Link>
-      </header>
+      </div>
     </div>
   );
 };

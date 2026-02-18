@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import DocumentList from "./pages/DocumentList.jsx";
 import axios from "axios";
 import { Button } from "./components/ui/button.jsx";
 import { Input } from "./components/ui/input.jsx";
@@ -46,8 +47,15 @@ const Home = () => {
         </a>
         <p className="mt-5">Building something incredible ~!</p>
         <Link 
-          to="/admin/upload" 
+          to="/docs" 
           className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          data-testid="docs-link"
+        >
+          View Documents
+        </Link>
+        <Link 
+          to="/admin/upload" 
+          className="mt-3 px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
           data-testid="admin-upload-link"
         >
           Admin Upload
@@ -186,6 +194,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/docs" element={<DocumentList />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
         </Routes>
       </BrowserRouter>

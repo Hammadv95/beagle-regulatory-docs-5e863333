@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import DocumentList from "./pages/DocumentList.jsx";
 import DocumentDetail from "./pages/DocumentDetail.jsx";
+import SiteHeader from "./components/SiteHeader.jsx";
 import axios from "axios";
 import { Button } from "./components/ui/button.jsx";
 import { Input } from "./components/ui/input.jsx";
@@ -193,6 +194,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <SiteHeader />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/docs" element={<DocumentList />} />

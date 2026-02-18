@@ -35,7 +35,7 @@ const Home = () => {
         <p className="mt-5">Building something incredible ~!</p>
         <Link 
           to="/admin/upload" 
-          className="mt-4 px-4 py-2 bg-white/10 rounded-md hover:bg-white/20 transition-colors"
+          className="mt-4 px-4 py-2 bg-[#ff7900] text-white rounded-md hover:bg-[#e66d00] transition-colors"
           data-testid="admin-upload-link"
         >
           Admin Upload

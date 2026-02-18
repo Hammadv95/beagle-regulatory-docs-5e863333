@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Loader2, ArrowLeft, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import beagleLogo from "@/assets/beagle-logo.png";
 
 const API_BASE = "https://docs-website-production.up.railway.app";
 
@@ -38,43 +40,66 @@ export default function FAQPage() {
     return acc;
   }, {} as Record<string, FAQ[]>);
 
-  if (loading) return <div className="min-h-screen bg-[#fffaf4] flex items-center justify-center"><Loader2 className="h-8 w-8 animate-spin text-[#ff7900]" /></div>;
-
   return (
-    <div className="min-h-screen bg-[#fffaf4]">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link to="/" className="text-[#ff7900] hover:underline inline-flex items-center gap-1 mb-4">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Link>
-        <h1 className="text-3xl font-bold mb-6 text-[#ff7900]">Frequently Asked Questions</h1>
-        <div className="relative mb-8">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search FAQs..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="pl-10 h-12 text-base shadow-sm"
-          />
+    <div className="min-h-screen bg-secondary">
+      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto flex items-center justify-between px-4 py-4 bg-[#fffaf5]">
+          <div className="flex items-center gap-3">
+            <Link to="/">
+              <Button variant="ghost" size="icon">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/">
+              <img src={beagleLogo} alt="Beagle" className="h-16" />
+            </Link>
+          </div>
+          <Link
+            to="/admin"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Admin
+          </Link>
         </div>
-        
-        {Object.keys(grouped).length === 0 ? (
-          <p className="text-center text-muted-foreground py-12">No FAQs match your search.</p>
+      </header>
+
+      <main className="container mx-auto px-4 py-8 max-w-3xl">
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
         ) : (
-          Object.entries(grouped).map(([cat, items]) => (
-            <div key={cat} className="mb-8">
-              <h2 className="text-xl font-semibold mb-4 border-b pb-2">{cat}</h2>
-              <Accordion type="single" collapsible>
-                {items.map(faq => (
-                  <AccordionItem key={faq.id} value={faq.id} className="bg-white rounded-lg border mb-2 px-4">
-                    <AccordionTrigger className="text-left hover:text-[#ff7900]">{faq.question}</AccordionTrigger>
-                    <AccordionContent className="text-gray-600 pb-4">{faq.answer}</AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
+          <>
+            <h1 className="text-3xl font-bold mb-6 text-primary">Frequently Asked Questions</h1>
+            <div className="relative mb-8">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search FAQs..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-10 h-12 text-base shadow-sm"
+              />
             </div>
-          ))
+
+            {Object.keys(grouped).length === 0 ? (
+              <p className="text-center text-muted-foreground py-12">No FAQs match your search.</p>
+            ) : (
+              Object.entries(grouped).map(([cat, items]) => (
+                <div key={cat} className="mb-8">
+                  <h2 className="text-xl font-semibold mb-4 border-b pb-2">{cat}</h2>
+                  <Accordion type="single" collapsible>
+                    {items.map(faq => (
+                      <AccordionItem key={faq.id} value={faq.id} className="bg-card rounded-lg border mb-2 px-4">
+                        <AccordionTrigger className="text-left hover:text-primary">{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              ))
+            )}
+          </>
         )}
-      </div>
+      </main>
     </div>
   );
 }

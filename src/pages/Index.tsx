@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
-import { Search } from "lucide-react";
+import { Search, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -38,9 +39,16 @@ const Index = () => {
     <div className="min-h-screen bg-secondary">
       <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between px-4 py-4 bg-[#fffaf5]">
-          <Link to="/">
-            <img src={beagleLogo} alt="Beagle" className="h-16" />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link to="/">
+              <Button variant="ghost" size="icon">
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/">
+              <img src={beagleLogo} alt="Beagle" className="h-16" />
+            </Link>
+          </div>
           <Link
             to="/admin"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors">

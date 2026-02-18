@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
-import { FileText } from "lucide-react";
+import { FileText, HelpCircle, ClipboardList } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Home = () => {
@@ -26,6 +26,42 @@ const Home = () => {
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
                   Browse and search state-level regulatory policy documents.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/docs?type=pms_report_requests">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group border-border/60">
+            <CardContent className="p-6 flex items-start gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 text-primary">
+                <ClipboardList className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  PMS Report Requests
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Browse PMS report request documents.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/faq">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group border-border/60">
+            <CardContent className="p-6 flex items-start gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 text-primary">
+                <HelpCircle className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  FAQs
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Find answers to frequently asked questions.
                 </p>
               </div>
             </CardContent>

@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 const Home = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 relative" style={{ backgroundColor: '#fffaf4' }}>
-      <Link to="/admin" className="absolute top-4 right-4 text-sm text-muted-foreground hover:text-foreground transition-colors">
+      <Link to="/admin" className="absolute top-4 right-4 text-sm font-medium text-primary/70 hover:text-primary transition-colors border border-primary/30 rounded-md px-3 py-1.5 hover:bg-primary/5">
         Admin
       </Link>
       <div className="flex flex-col items-center mb-12">

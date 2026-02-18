@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import axios from "axios";
-import AdminUpload from "@/pages/AdminUpload";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -51,7 +50,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin/upload" element={<AdminUpload />} />
+          <Route path="/admin/upload" element={<div className="p-8">Admin Upload (coming soon)</div>} />
         </Routes>
       </BrowserRouter>
     </div>

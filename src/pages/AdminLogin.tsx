@@ -18,7 +18,7 @@ const AdminLogin = () => {
     setLoading(true);
     try {
       const token = await adminLogin(email, password);
-      localStorage.setItem("ADMIN_TOKEN", token);
+      localStorage.setItem("admin_token", token);
       toast({ title: "Logged in successfully" });
       navigate("/admin/upload");
     } catch {

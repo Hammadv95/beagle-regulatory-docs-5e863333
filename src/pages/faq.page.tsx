@@ -42,12 +42,15 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-[#fffaf4]">
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link to="/" className="text-[#ff7900] hover:underline inline-flex items-center gap-1 mb-4">
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Link>
-        <h1 className="text-3xl font-bold mb-6">Frequently Asked Questions</h1>
-
+      <div className="bg-[#ff7900] px-4 py-10 mb-8">
+        <div className="max-w-4xl mx-auto">
+          <Link to="/" className="text-white/80 hover:text-white hover:underline inline-flex items-center gap-1 mb-3">
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Link>
+          <h1 className="text-3xl font-bold text-white">Frequently Asked Questions</h1>
+        </div>
+      </div>
+      <div className="max-w-4xl mx-auto px-4 pb-12">
         <div className="relative mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -10,11 +10,15 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { format } from "date-fns";
 
 const Index = () => {
+  const [searchParams] = useSearchParams();
+  const docType = searchParams.get("type") || "state_regulation";
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const debouncedQuery = useDebounce(query, 300);
+
+  const pageTitle = docType === "pms_report_requests" ? "PMS Report Requests" : "State Regulatory Policies";
 
   useEffect(() => {
     setLoading(true);
@@ -22,13 +26,13 @@ const Index = () => {
 
     const load = debouncedQuery.trim() ?
     searchDocs(debouncedQuery).then((r) => r.hits) :
-    fetchDocs();
+    fetchDocs(docType);
 
     load.
     then(setDocs).
     catch(() => setError("Failed to load documents.")).
     finally(() => setLoading(false));
-  }, [debouncedQuery]);
+  }, [debouncedQuery, docType]);
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -47,7 +51,7 @@ const Index = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-3xl">
-        <h1 className="text-3xl font-bold mb-6 bg-secondary text-primary">State Regulatory Policies</h1>
+        <h1 className="text-3xl font-bold mb-6 bg-secondary text-primary">{pageTitle}</h1>
         <div className="relative mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input

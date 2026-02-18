@@ -15,8 +15,9 @@ export interface SearchResult {
   estimatedTotalHits: number;
 }
 
-export async function fetchDocs(): Promise<Doc[]> {
-  const res = await fetch(`${API_BASE}/api/docs`);
+export async function fetchDocs(docType?: string): Promise<Doc[]> {
+  const url = docType ? `${API_BASE}/api/docs?doc_type=${encodeURIComponent(docType)}` : `${API_BASE}/api/docs`;
+  const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch docs");
   const data = await res.json();
   return data.docs;

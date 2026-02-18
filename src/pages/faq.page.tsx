@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Loader2, ArrowLeft, Search } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Loader2, ArrowLeft, Search, ChevronDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import beagleLogo from "@/assets/beagle-logo.png";
@@ -84,17 +85,22 @@ export default function FAQPage() {
               <p className="text-center text-muted-foreground py-12">No FAQs match your search.</p>
             ) : (
               Object.entries(grouped).map(([cat, items]) => (
-                <div key={cat} className="mb-8">
-                  <h2 className="text-xl font-semibold mb-4 border-b pb-2">{cat}</h2>
-                  <Accordion type="single" collapsible>
-                    {items.map(faq => (
-                      <AccordionItem key={faq.id} value={faq.id} className="bg-card rounded-lg border mb-2 px-4">
-                        <AccordionTrigger className="text-left hover:text-primary">{faq.question}</AccordionTrigger>
-                        <AccordionContent className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </div>
+                <Collapsible key={cat} defaultOpen className="mb-8">
+                  <CollapsibleTrigger className="flex w-full items-center justify-between text-xl font-semibold border-b pb-2 cursor-pointer hover:text-primary transition-colors">
+                    {cat}
+                    <ChevronDown className="h-5 w-5 transition-transform duration-200 [[data-state=open]>&]:rotate-180" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="mt-4">
+                    <Accordion type="single" collapsible>
+                      {items.map(faq => (
+                        <AccordionItem key={faq.id} value={faq.id} className="bg-card rounded-lg border mb-2 px-4">
+                          <AccordionTrigger className="text-left hover:text-primary">{faq.question}</AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </CollapsibleContent>
+                </Collapsible>
               ))
             )}
           </>

@@ -69,6 +69,63 @@ async def get_status_checks():
 # Include the router in the main app
 app.include_router(api_router)
 
+# Admin Upload Endpoint
+@api_router.post("/admin/upload")
+async def admin_upload(
+    title: str = Form(...),
+    pdf: UploadFile = File(...),
+    doc_type: Literal["state_regulation", "pms_report_requests"] = Form("state_regulation"),
+    slug: Optional[str] = Form(None),
+    summary: Optional[str] = Form(None),
+    authorization: Optional[str] = Header(None)
+):
+    """
+    Admin endpoint to upload documents with document type selection.
+    
+    - doc_type: "state_regulation" (default) or "pms_report_requests"
+    """
+    # Simple token validation (in production, use proper auth)
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Authorization required")
+    
+    token = authorization.replace("Bearer ", "")
+    if not token:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Validate file type
+    if pdf.content_type != "application/pdf":
+        raise HTTPException(status_code=400, detail="Only PDF files are allowed")
+    
+    # Read file content
+    file_content = await pdf.read()
+    file_size = len(file_content)
+    
+    # Create document record
+    doc_id = str(uuid.uuid4())
+    document = {
+        "id": doc_id,
+        "title": title,
+        "doc_type": doc_type,
+        "slug": slug,
+        "summary": summary,
+        "filename": pdf.filename,
+        "file_size": file_size,
+        "uploaded_at": datetime.now(timezone.utc).isoformat(),
+        "uploaded_by": token[:20] + "..."  # Store truncated token for reference
+    }
+    
+    # Store in MongoDB
+    await db.documents.insert_one(document)
+    
+    logger.info(f"Document uploaded: {title} (type: {doc_type})")
+    
+    return {
+        "success": True,
+        "message": "Document uploaded successfully",
+        "document_id": doc_id,
+        "doc_type": doc_type
+    }
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,

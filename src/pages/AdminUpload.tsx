@@ -1,140 +1,210 @@
-import { useState, useEffect, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import beagleLogo from "@/assets/beagle-logo.png";
-import { Upload, LogOut } from "lucide-react";
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { adminUpload } from "@/lib/api";
-import { toast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Upload, FileText, Loader2, HelpCircle } from "lucide-react";
 
-const AdminUpload = () => {
-  const navigate = useNavigate();
-  const fileRef = useRef<HTMLInputElement>(null);
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+export default function AdminUploadPage() {
+  const [docType, setDocType] = useState<string>("state_regulation");
+  
+  // Document upload state
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [summary, setSummary] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  
+  // FAQ state
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [category, setCategory] = useState("");
+  const [displayOrder, setDisplayOrder] = useState(0);
+  
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: string; text: string }>({ type: "", text: "" });
 
-  useEffect(() => {
-    if (!localStorage.getItem("ADMIN_TOKEN")) {
-      navigate("/admin");
-    }
-  }, [navigate]);
+  const token = typeof window !== "undefined" ? localStorage.getItem("admin_token") : "";
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0];
-    if (f && f.type !== "application/pdf") {
-      toast({ title: "Only PDF files are allowed", variant: "destructive" });
-      e.target.value = "";
-      return;
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile && selectedFile.type === "application/pdf") {
+      setFile(selectedFile);
+      setMessage({ type: "", text: "" });
+    } else {
+      setFile(null);
+      setMessage({ type: "error", text: "Please select a valid PDF file" });
     }
-    setFile(f || null);
+  };
+
+  const handleDocumentUpload = async () => {
+    if (!title.trim()) throw new Error("Title is required");
+    if (!file) throw new Error("Please select a PDF file");
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("pdf", file);
+    formData.append("doc_type", docType);
+    if (slug) formData.append("slug", slug);
+    if (summary) formData.append("summary", summary);
+
+    const response = await fetch(`${API_BASE}/admin/upload`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.detail || "Upload failed");
+    }
+    return response.json();
+  };
+
+  const handleFAQSubmit = async () => {
+    if (!question.trim() || !answer.trim()) throw new Error("Question and Answer are required");
+
+    const formData = new FormData();
+    formData.append("question", question);
+    formData.append("answer", answer);
+    if (category) formData.append("category", category);
+    formData.append("display_order", displayOrder.toString());
+
+    const response = await fetch(`${API_BASE}/admin/faqs`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      throw new Error(err.detail || "FAQ creation failed");
+    }
+    return response.json();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return;
-    const token = localStorage.getItem("ADMIN_TOKEN");
-    if (!token) return navigate("/admin");
+    if (!token) {
+      setMessage({ type: "error", text: "Please log in first" });
+      return;
+    }
 
     setLoading(true);
+    setMessage({ type: "", text: "" });
+
     try {
-      const result = await adminUpload(token, title, file, slug || undefined, summary || undefined);
-      toast({ title: "Upload successful!", description: `Document "${result.slug}" created.` });
-      setTitle("");
-      setSlug("");
-      setSummary("");
-      setFile(null);
-      if (fileRef.current) fileRef.current.value = "";
-    } catch {
-      toast({ title: "Upload failed", description: "Please try again.", variant: "destructive" });
+      if (docType === "faq") {
+        await handleFAQSubmit();
+        setMessage({ type: "success", text: "FAQ created successfully!" });
+        setQuestion(""); setAnswer(""); setCategory(""); setDisplayOrder(0);
+      } else {
+        await handleDocumentUpload();
+        setMessage({ type: "success", text: "Document uploaded successfully!" });
+        setTitle(""); setSlug(""); setSummary(""); setFile(null);
+      }
+    } catch (error: any) {
+      setMessage({ type: "error", text: error.message || "Operation failed" });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("ADMIN_TOKEN");
-    navigate("/admin");
-  };
+  const isFAQ = docType === "faq";
 
   return (
-    <div className="min-h-screen bg-secondary">
-      <header className="border-b bg-card/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto flex items-center justify-between px-4 py-4 bg-[#fffaf5]">
-          <Link to="/">
-            <img src={beagleLogo} alt="Beagle" className="h-16" />
-          </Link>
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-1.5">
-            <LogOut className="h-4 w-4" />
-            Logout
-          </Button>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#fffaf4] p-6 flex items-center justify-center">
+      <Card className="w-full max-w-lg">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {isFAQ ? <HelpCircle className="h-5 w-5" /> : <Upload className="h-5 w-5" />}
+            Admin Upload
+          </CardTitle>
+          <CardDescription>
+            {isFAQ ? "Add a new FAQ entry" : "Upload regulatory documents"}
+          </CardDescription>
+        </CardHeader>
 
-      <main className="container mx-auto px-4 py-8 max-w-lg">
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Upload className="h-5 w-5" />
-              Upload Document
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="title">Title *</Label>
-                <Input
-                  id="title"
-                  required
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Document title"
-                />
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label>Document Type</Label>
+              <Select value={docType} onValueChange={setDocType} disabled={loading}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="faq">FAQ</SelectItem>
+                  <SelectItem value="state_regulation">State Regulatory Policy</SelectItem>
+                  <SelectItem value="pms_report_requests">PMS Request Document</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {isFAQ ? (
+              <>
+                <div className="space-y-2">
+                  <Label>Question *</Label>
+                  <Input value={question} onChange={(e) => setQuestion(e.target.value)} disabled={loading} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Answer *</Label>
+                  <Textarea value={answer} onChange={(e) => setAnswer(e.target.value)} disabled={loading} rows={4} />
+                </div>
+                <div className="space-y-2">
+                  <Label>Category (optional)</Label>
+                  <Input value={category} onChange={(e) => setCategory(e.target.value)} disabled={loading} />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <Label>Title *</Label>
+                  <Input value={title} onChange={(e) => setTitle(e.target.value)} disabled={loading} />
+                </div>
+                <div className="space-y-2">
+                  <Label>PDF File *</Label>
+                  <Input type="file" accept=".pdf" onChange={handleFileChange} disabled={loading} />
+                  {file && <p className="text-sm text-gray-500 flex items-center gap-1"><FileText className="h-4 w-4" />{file.name}</p>}
+                </div>
+                <div className="space-y-2">
+                  <Label>Summary (optional)</Label>
+                  <Textarea value={summary} onChange={(e) => setSummary(e.target.value)} disabled={loading} rows={3} />
+                </div>
+              </>
+            )}
+
+            {message.text && (
+              <div className={`p-3 rounded-md text-sm ${message.type === "error" ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"}`}>
+                {message.text}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="slug">Slug (optional)</Label>
-                <Input
-                  id="slug"
-                  value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
-                  placeholder="custom-slug"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="summary">Summary (optional)</Label>
-                <Textarea
-                  id="summary"
-                  value={summary}
-                  onChange={(e) => setSummary(e.target.value)}
-                  placeholder="Brief description..."
-                  rows={3}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="pdf">PDF File *</Label>
-                <Input
-                  id="pdf"
-                  type="file"
-                  accept="application/pdf"
-                  required
-                  ref={fileRef}
-                  onChange={handleFileChange}
-                />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Uploading..." : "Upload"}
-              </Button>
-            </form>
+            )}
           </CardContent>
-        </Card>
-      </main>
+
+          <CardFooter>
+            <Button type="submit" className="w-full bg-[#ff7900] hover:bg-[#e66d00]" disabled={loading}>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              {isFAQ ? "Create FAQ" : "Upload Document"}
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
-};
-
-export default AdminUpload;
+}

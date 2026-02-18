@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://docs-website-production.up.railway.app";
 
 /**
  * Admin upload function to upload documents

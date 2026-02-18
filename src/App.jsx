@@ -17,7 +17,7 @@ import {
 import { Textarea } from "./components/ui/textarea.jsx";
 import { Upload, FileText, Loader2 } from "lucide-react";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://docs-website-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const Home = () => {

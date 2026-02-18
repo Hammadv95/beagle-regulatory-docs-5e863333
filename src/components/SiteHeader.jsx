@@ -9,7 +9,7 @@ const SiteHeader = () => {
           <img
             src="https://beagleprotected.com/assets/beagle-logo-CcCLgaIr.png"
             alt="Beagle"
-            className="h-9"
+            className="h-12"
           />
         </Link>
         <Link

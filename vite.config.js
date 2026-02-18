@@ -5,10 +5,13 @@ import { componentTagger } from 'lovable-tagger'
 
 export default defineConfig(({ mode }) => ({
   plugins: [
-    react(),
+    react({
+      jsxRuntime: 'automatic',
+    }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
+    extensions: ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'],
     alias: {
       '@': path.resolve(__dirname, './src'),
     },

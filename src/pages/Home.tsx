@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
-import { FileText, HelpCircle, ClipboardList } from "lucide-react";
+import { FileText, HelpCircle, ClipboardList, Shield } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const Home = () => {
@@ -62,6 +62,24 @@ const Home = () => {
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
                   Find answers to frequently asked questions.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link to="/admin">
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer group border-border/60">
+            <CardContent className="p-6 flex items-start gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 text-primary">
+                <Shield className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  Admin
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Access the admin panel to manage content.
                 </p>
               </div>
             </CardContent>

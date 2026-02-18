@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import DocumentList from "./pages/DocumentList.jsx";
+import DocumentDetail from "./pages/DocumentDetail.jsx";
 import axios from "axios";
 import { Button } from "./components/ui/button.jsx";
 import { Input } from "./components/ui/input.jsx";
@@ -195,6 +196,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/docs" element={<DocumentList />} />
+          <Route path="/docs/:slug" element={<DocumentDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
         </Routes>
       </BrowserRouter>

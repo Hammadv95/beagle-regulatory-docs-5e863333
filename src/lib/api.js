@@ -27,6 +27,20 @@ export async function fetchDocuments(search) {
   return response.json();
 }
 
+/**
+ * Fetch a single document by slug
+ * @param {string} slug - Document slug
+ * @returns {Promise<any>} Document data
+ */
+export async function fetchDocument(slug) {
+  const response = await fetch(`${BACKEND_URL}/api/docs/${encodeURIComponent(slug)}`);
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || "Document not found");
+  }
+  return response.json();
+}
+
 export async function adminUpload(
   token,
   title,

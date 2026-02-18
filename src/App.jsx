@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import DocumentList from "./pages/DocumentList.jsx";
 import DocumentDetail from "./pages/DocumentDetail.jsx";
+import PMSReportList from "./pages/PMSReportList.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 import axios from "axios";
 import { Button } from "./components/ui/button.jsx";
@@ -45,6 +46,23 @@ const Home = () => {
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
                   Browse and search state-level regulatory policy documents.
+                </p>
+              </div>
+            </div>
+          </div>
+        </Link>
+        <Link to="/docs/pms-reports" data-testid="pms-reports-link">
+          <div className="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow cursor-pointer group border-border/60">
+            <div className="p-6 flex items-start gap-4">
+              <div className="rounded-lg bg-primary/10 p-3 text-primary">
+                <FileText className="h-6 w-6" />
+              </div>
+              <div>
+                <h2 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                  Risk Report Requests
+                </h2>
+                <p className="text-sm text-muted-foreground mt-1">
+                  View PMS report request documents.
                 </p>
               </div>
             </div>
@@ -186,6 +204,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/docs" element={<DocumentList />} />
+          <Route path="/docs/pms-reports" element={<PMSReportList />} />
           <Route path="/docs/:slug" element={<DocumentDetail />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
         </Routes>

@@ -15,9 +15,13 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://docs-website-pr
  * @param {string} [search] - Optional search query
  * @returns {Promise<any[]>} List of documents
  */
-export async function fetchDocuments(search) {
+export async function fetchDocuments(search, docType) {
   let url = `${BACKEND_URL}/api/docs`;
-  if (search) url += `?q=${encodeURIComponent(search)}`;
+  const params = new URLSearchParams();
+  if (search) params.set("q", search);
+  if (docType) params.set("doc_type", docType);
+  const qs = params.toString();
+  if (qs) url += `?${qs}`;
 
   const response = await fetch(url);
   if (!response.ok) {

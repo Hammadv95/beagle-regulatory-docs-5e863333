@@ -34,7 +34,7 @@ const Home = () => {
         <p className="mt-5">Building something incredible ~!</p>
         <Link 
           to="/admin/upload" 
-          className="mt-4 px-4 py-2 bg-[#ff7900] text-white rounded-md hover:bg-[#e66d00] transition-colors"
+          className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
           data-testid="admin-upload-link"
         >
           Admin Upload
@@ -50,7 +50,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin/upload" element={<div className="p-8">Admin Upload (coming soon)</div>} />
+          <Route path="/admin/upload" element={<div className="min-h-screen bg-background p-8 flex items-center justify-center"><p>Admin Upload (loading shadcn components...)</p></div>} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,7 +20,7 @@ import {
 } from "@/components/ui/card";
 import { Upload, FileText, Loader2, HelpCircle } from "lucide-react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE = "https://docs-website-production.up.railway.app";
 
 export default function AdminUploadPage() {
   const [docType, setDocType] = useState<string>("state_regulation");

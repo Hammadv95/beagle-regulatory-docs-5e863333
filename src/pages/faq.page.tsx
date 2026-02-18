@@ -1,11 +1,9 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Loader2, ArrowLeft } from "lucide-react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE = "https://docs-website-production.up.railway.app";
 
 interface FAQ {
   id: string;
@@ -37,7 +35,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-[#fffaf4]">
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <Link href="/" className="text-[#ff7900] hover:underline inline-flex items-center gap-1 mb-4">
+        <Link to="/" className="text-[#ff7900] hover:underline inline-flex items-center gap-1 mb-4">
           <ArrowLeft className="h-4 w-4" /> Back
         </Link>
         <h1 className="text-3xl font-bold mb-8">Frequently Asked Questions</h1>

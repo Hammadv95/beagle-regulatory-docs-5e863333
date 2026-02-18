@@ -83,6 +83,35 @@ async def admin_upload(
     summary: Optional[str] = Form(None),
     authorization: Optional[str] = Header(None)
 ):
+  # Add this endpoint to your backend/server.py
+
+@api_router.get("/docs")
+async def list_docs(doc_type: Optional[str] = None):
+    """
+    List documents, optionally filtered by doc_type.
+    - No filter: returns all docs (or just state_regulation)
+    - doc_type=pms_report_requests: returns only PMS report docs
+    """
+    query = {}
+    if doc_type:
+        query["doc_type"] = doc_type
+    
+    docs = await db.documents.find(query, {"_id": 0}).sort("uploaded_at", -1).to_list(1000)
+    
+    # Format response
+    result = []
+    for doc in docs:
+        result.append({
+            "slug": doc.get("slug", ""),
+            "title": doc.get("title", ""),
+            "summary": doc.get("summary", ""),
+            "updated_at": doc.get("uploaded_at", ""),
+            "doc_type": doc.get("doc_type", "state_regulation"),
+            "view_url": doc.get("view_url", ""),
+        })
+    
+    return {"docs": result}
+
     """
     Admin endpoint to upload documents with document type selection.
     

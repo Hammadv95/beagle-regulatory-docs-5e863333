@@ -16,7 +16,7 @@ const DocumentList = () => {
       setError("");
       try {
         const data = await fetchDocuments();
-        setDocuments(Array.isArray(data) ? data : data.documents || []);
+        setDocuments(Array.isArray(data) ? data : data.docs || data.documents || []);
       } catch (err) {
         setError(err.message || "Failed to load documents");
         setDocuments([]);

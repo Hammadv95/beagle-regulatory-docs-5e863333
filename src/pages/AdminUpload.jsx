@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { adminUpload } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +23,6 @@ const AdminUpload = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
 
-  // In a real app, this would come from auth context
   const token = localStorage.getItem("admin_token") || "";
 
   const handleFileChange = (e) => {
@@ -69,13 +68,11 @@ const AdminUpload = () => {
       );
       
       setMessage({ type: "success", text: "Document uploaded successfully!" });
-      // Reset form
       setTitle("");
       setSlug("");
       setSummary("");
       setFile(null);
       setDocType("state_regulation");
-      // Reset file input
       const fileInput = document.getElementById("pdf-upload");
       if (fileInput) fileInput.value = "";
     } catch (error) {
@@ -100,7 +97,6 @@ const AdminUpload = () => {
         
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
-            {/* Title Input */}
             <div className="space-y-2">
               <Label htmlFor="title">Title *</Label>
               <Input
@@ -113,7 +109,6 @@ const AdminUpload = () => {
               />
             </div>
 
-            {/* Slug Input */}
             <div className="space-y-2">
               <Label htmlFor="slug">Slug (optional)</Label>
               <Input
@@ -126,7 +121,6 @@ const AdminUpload = () => {
               />
             </div>
 
-            {/* Document Type Dropdown */}
             <div className="space-y-2">
               <Label htmlFor="doc-type">Document Type</Label>
               <Select
@@ -148,7 +142,6 @@ const AdminUpload = () => {
               </Select>
             </div>
 
-            {/* PDF File Input */}
             <div className="space-y-2">
               <Label htmlFor="pdf-upload">PDF File *</Label>
               <div className="flex items-center gap-2">
@@ -170,7 +163,6 @@ const AdminUpload = () => {
               )}
             </div>
 
-            {/* Summary Input */}
             <div className="space-y-2">
               <Label htmlFor="summary">Summary (optional)</Label>
               <Textarea
@@ -184,7 +176,6 @@ const AdminUpload = () => {
               />
             </div>
 
-            {/* Status Message */}
             {message.text && (
               <div
                 data-testid="upload-message"

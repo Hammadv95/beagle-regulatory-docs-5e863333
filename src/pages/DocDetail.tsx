@@ -23,9 +23,6 @@ const DocDetail = () => {
   }, [slug]);
 
   const viewUrl = slug ? getViewUrl(slug) : "";
-  const googleViewerUrl = viewUrl
-    ? `https://docs.google.com/gview?url=${encodeURIComponent(viewUrl)}&embedded=true`
-    : "";
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -67,7 +64,7 @@ const DocDetail = () => {
             </div>
             <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
               <iframe
-                src={googleViewerUrl}
+                src={viewUrl}
                 title={doc.title}
                 className="w-full h-[75vh]"
               />

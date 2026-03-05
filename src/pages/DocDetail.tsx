@@ -64,13 +64,7 @@ const DocDetail = () => {
               </p>
             </div>
             <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
-              <iframe
-                src={googleViewerUrl}
-                title={doc.title}
-                className="w-full h-[75vh]"
-              />
-              {/* Overlay to cover the Google Docs Viewer external link icon */}
-              
+              <PdfViewer url={viewUrl} title={doc.title} />
             </div>
           </>
         ) : null}

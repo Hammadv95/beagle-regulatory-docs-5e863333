@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchDoc, getViewUrl, type Doc } from "@/lib/api";
 import { format } from "date-fns";
+import PdfViewer from "@/components/PdfViewer";
 
 const DocDetail = () => {
   const { slug } = useParams<{ slug: string }>();

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchDoc, getViewUrl, type Doc } from "@/lib/api";
 import { format } from "date-fns";
+import PdfViewer from "@/components/PdfViewer";
 
 const DocDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -23,9 +24,6 @@ const DocDetail = () => {
   }, [slug]);
 
   const viewUrl = slug ? getViewUrl(slug) : "";
-  const googleViewerUrl = viewUrl
-    ? `https://docs.google.com/gview?url=${encodeURIComponent(viewUrl)}&embedded=true`
-    : "";
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -66,13 +64,7 @@ const DocDetail = () => {
               </p>
             </div>
             <div className="rounded-lg border overflow-hidden shadow-sm bg-card">
-              <iframe
-                src={googleViewerUrl}
-                title={doc.title}
-                className="w-full h-[75vh]"
-              />
-              {/* Overlay to cover the Google Docs Viewer external link icon */}
-              
+              <PdfViewer url={viewUrl} title={doc.title} />
             </div>
           </>
         ) : null}

@@ -24,9 +24,6 @@ const DocDetail = () => {
   }, [slug]);
 
   const viewUrl = slug ? getViewUrl(slug) : "";
-  const googleViewerUrl = viewUrl
-    ? `https://docs.google.com/gview?url=${encodeURIComponent(viewUrl)}&embedded=true`
-    : "";
 
   return (
     <div className="min-h-screen bg-secondary">

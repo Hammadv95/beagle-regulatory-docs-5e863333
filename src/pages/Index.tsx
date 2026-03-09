@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import beagleLogo from "@/assets/beagle-logo.png";
 import { Search, ArrowLeft } from "lucide-react";

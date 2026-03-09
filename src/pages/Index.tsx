@@ -33,7 +33,7 @@ const Index = () => {
     then(setDocs).
     catch(() => setError("Failed to load documents.")).
     finally(() => setLoading(false));
-  }, [debouncedQuery, docType]);
+  }, [debouncedQuery, docTypes.join(",")]);
 
   return (
     <div className="min-h-screen bg-secondary">

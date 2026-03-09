@@ -12,14 +12,14 @@ import { format } from "date-fns";
 
 const Index = () => {
   const [searchParams] = useSearchParams();
-  const docType = searchParams.get("type") || "state_regulation";
+  const docTypes = (searchParams.get("type") || "state_regulation,general").split(",");
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const debouncedQuery = useDebounce(query, 300);
 
-  const pageTitle = docType === "pms_report_requests" ? "PMS Report Requests" : "State Regulatory Policies";
+  const pageTitle = docTypes.includes("pms_report_requests") ? "PMS Report Requests" : "State Regulatory Policies";
 
   useEffect(() => {
     setLoading(true);
@@ -27,13 +27,13 @@ const Index = () => {
 
     const load = debouncedQuery.trim() ?
     searchDocs(debouncedQuery).then((r) => r.hits) :
-    fetchDocs(docType);
+    Promise.all(docTypes.map(t => fetchDocs(t))).then(results => results.flat());
 
     load.
     then(setDocs).
     catch(() => setError("Failed to load documents.")).
     finally(() => setLoading(false));
-  }, [debouncedQuery, docType]);
+  }, [debouncedQuery, docTypes.join(",")]);
 
   return (
     <div className="min-h-screen bg-secondary">

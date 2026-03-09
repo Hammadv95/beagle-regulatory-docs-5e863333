@@ -19,7 +19,7 @@ const Index = () => {
   const [error, setError] = useState("");
   const debouncedQuery = useDebounce(query, 300);
 
-  const pageTitle = docType === "pms_report_requests" ? "PMS Report Requests" : "State Regulatory Policies";
+  const pageTitle = docTypes.includes("pms_report_requests") ? "PMS Report Requests" : "State Regulatory Policies";
 
   useEffect(() => {
     setLoading(true);

@@ -12,7 +12,7 @@ import { format } from "date-fns";
 
 const Index = () => {
   const [searchParams] = useSearchParams();
-  const docType = searchParams.get("type") || "state_regulation,general";
+  const docTypes = (searchParams.get("type") || "state_regulation,general").split(",");
   const [docs, setDocs] = useState<Doc[]>([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(true);

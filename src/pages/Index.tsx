@@ -27,7 +27,7 @@ const Index = () => {
 
     const load = debouncedQuery.trim() ?
     searchDocs(debouncedQuery).then((r) => r.hits) :
-    fetchDocs(docType);
+    Promise.all(docTypes.map(t => fetchDocs(t))).then(results => results.flat());
 
     load.
     then(setDocs).

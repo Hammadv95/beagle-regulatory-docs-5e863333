@@ -9,6 +9,7 @@ import DocDetail from "./pages/DocDetail";
 import FAQPage from "./pages/faq.page";
 import AdminLogin from "./pages/AdminLogin";
 import AdminUpload from "./pages/AdminUpload";
+import SOPs from "./pages/SOPs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/docs" element={<Index />} />
           <Route path="/docs/:slug" element={<DocDetail />} />
           <Route path="/faq" element={<FAQPage />} />
+          <Route path="/sops" element={<SOPs />} />
           <Route path="/admin" element={<AdminLogin />} />
           <Route path="/admin/upload" element={<AdminUpload />} />
           <Route path="*" element={<NotFound />} />

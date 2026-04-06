@@ -7,6 +7,8 @@ export interface Doc {
   updated_at: string;
   is_published?: boolean;
   view_url?: string;
+  doc_type?: string;
+  version?: string;
 }
 
 export interface SearchResult {

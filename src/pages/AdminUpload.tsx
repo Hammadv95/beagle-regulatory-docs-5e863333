@@ -155,6 +155,7 @@ export default function AdminUploadPage() {
                   <SelectItem value="faq">FAQ</SelectItem>
                   <SelectItem value="state_regulation">State Regulatory Policy</SelectItem>
                   <SelectItem value="pms_report_requests">PMS Request Document</SelectItem>
+                  <SelectItem value="sop">SOP (Standard Operating Procedure)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
